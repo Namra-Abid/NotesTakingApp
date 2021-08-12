@@ -3,6 +3,7 @@ showNotes();
 // To add notes to local storage
 let addBtn = document.getElementById('addbtn');
 addBtn.addEventListener("click", function () {
+    let title = document.getElementById('addTitle');
     let textarea = document.getElementById('addTxt');
     let notes = localStorage.getItem("notes");
     if (notes == null) {
@@ -12,9 +13,14 @@ addBtn.addEventListener("click", function () {
         notesArray = JSON.parse(notes);
 
     }
-    notesArray.push(textarea.value);
+    let myobj={
+        title:addTitle.value,
+        text:addTxt.value
+    }
+    notesArray.push(myobj);
     localStorage.setItem("notes", JSON.stringify(notesArray));
     textarea.value = "";
+    addTitle.value="";
     console.log(notesArray);
     showNotes();
 });
@@ -34,8 +40,8 @@ function showNotes() {
     console.log('sHow Notes3');
     notesArray.forEach(function (element, index) {
         html += `<div class="noteCard my-2 mx-2 card" style="width: 18rem;"><div class="card-body">
-          <h5 class="card-title">Note ${index + 1}</h5>
-          <p class="card-text">${element}</p>
+          <h5 class="card-title">Note ${element.title}</h5>
+          <p class="card-text">${element.text}</p>
           <a id=${index} onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</a>
         </div>
       </div>`;
